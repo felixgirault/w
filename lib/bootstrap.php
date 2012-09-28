@@ -5,8 +5,11 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
+namespace fg\w;
+
 require_once
 	dirname( __FILE__ )
+	. DIRECTORY_SEPARATOR . 'fg'
 	. DIRECTORY_SEPARATOR . 'w'
 	. DIRECTORY_SEPARATOR . 'ClassLoader.php';
 
@@ -26,7 +29,5 @@ if ( !defined( 'W_LIB')) {
  *	Autoload
  */
 
-$ClassLoader = new w\ClassLoader( W_LIB );
+$ClassLoader = new ClassLoader( W_LIB );
 $ClassLoader->register( );
-
-

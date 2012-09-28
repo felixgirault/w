@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace w;
+namespace fg\w;
 
 
 
 /**
  *	A simple PSR-0 compliant class loader.
  *
- *	@package w
+ *	@package fg.w
  */
 
 class ClassLoader {
@@ -61,7 +61,7 @@ class ClassLoader {
 
 		$path = $this->_basePath
 			. DIRECTORY_SEPARATOR
-			. str_replace( array( '_', '\\' ), DIRECTORY_SEPARATOR, $className )
+			. str_replace( '\\', DIRECTORY_SEPARATOR, $className )
 			. '.php';
 
 		if ( file_exists( $path )) {

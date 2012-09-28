@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace w;
+namespace fg\w;
 
 
 
 /**
  *	Curl is an object wrapper for the cURL library.
  *
- *	@package w
+ *	@package fg.w
  */
 
 class Curl {

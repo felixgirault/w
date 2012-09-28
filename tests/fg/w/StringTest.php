@@ -5,14 +5,16 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace w;
+namespace fg\w;
 
-require_once( dirname( dirname( __FILE__ )) . DIRECTORY_SEPARATOR . 'bootstrap.php' );
+require_once
+	dirname( dirname( dirname( __FILE__ )))
+	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 
 
 /**
- *	Test case for Package.
+ *	Test case for String.
  */
 
 class StringTest extends \PHPUnit_Framework_TestCase {
@@ -45,18 +47,18 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 */
 
-	public function testChar( ) {
+	public function testAt( ) {
 
 		$String = new String( 'abcdef' );
 
-		$this->assertEquals( $String->char( 0 ), 'a' );
-		$this->assertEquals( $String->char( 1 ), 'b' );
+		$this->assertEquals( $String->at( 0 ), 'a' );
+		$this->assertEquals( $String->at( 1 ), 'b' );
 
-		$this->assertEquals( $String->char( -1 ), 'f' );
-		$this->assertEquals( $String->char( -2 ), 'e' );
+		$this->assertEquals( $String->at( -1 ), 'f' );
+		$this->assertEquals( $String->at( -2 ), 'e' );
 
-		$this->assertNull( $String->char( 12 ));
-		$this->assertNull( $String->char( -12 ));
+		$this->assertNull( $String->at( 12 ));
+		$this->assertNull( $String->at( -12 ));
 	}
 
 
@@ -69,10 +71,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$String = new String( 'test test string' );
 
-		$this->assertEquals( $String->indexOf( new String( 'test' )), 0 );
-		$this->assertEquals( $String->indexOf( new String( 'string' )), 10 );
+		$this->assertEquals( $String->indexOf( 'test' ), 0 );
+		$this->assertEquals( $String->indexOf( 'string' ), 10 );
 
-		$this->assertFalse( $String->indexOf( new String( 'foo' )));
+		$this->assertFalse( $String->indexOf( 'foo' ));
 	}
 
 
@@ -85,10 +87,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$String = new String( 'test test string' );
 
-		$this->assertEquals( $String->lastIndexOf( new String( 'test' )), 5 );
-		$this->assertEquals( $String->lastIndexOf( new String( 'string' )), 10 );
+		$this->assertEquals( $String->lastIndexOf( 'test' ), 5 );
+		$this->assertEquals( $String->lastIndexOf( 'string' ), 10 );
 
-		$this->assertFalse( $String->lastIndexOf( new String( 'foo' )));
+		$this->assertFalse( $String->lastIndexOf( 'foo' ));
 	}
 
 
@@ -101,8 +103,8 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$String = new String( 'test string' );
 
-		$this->assertTrue( $String->contains( new String( 'test' )));
-		$this->assertFalse( $String->contains( new String( 'foo' )));
+		$this->assertTrue( $String->contains( 'test' ));
+		$this->assertFalse( $String->contains( 'foo' ));
 	}
 
 
@@ -116,10 +118,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 		$String = new String( 'test string' );
 
 		$this->assertTrue( $String->startsWith( $String ));
-		$this->assertTrue( $String->startsWith( new String( 'test' )));
+		$this->assertTrue( $String->startsWith( 'test' ));
 
-		$this->assertFalse( $String->startsWith( new String( 'fail' )));
-		$this->assertFalse( $String->startsWith( new String( 'longer test string' )));
+		$this->assertFalse( $String->startsWith( 'fail' ));
+		$this->assertFalse( $String->startsWith( 'longer test string' ));
 	}
 
 
@@ -133,10 +135,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 		$String = new String( 'test string' );
 
 		$this->assertTrue( $String->endsWith( $String ));
-		$this->assertTrue( $String->endsWith( new String( 'string' )));
+		$this->assertTrue( $String->endsWith( 'string' ));
 
-		$this->assertFalse( $String->endsWith( new String( 'fail' )));
-		$this->assertFalse( $String->endsWith( new String( 'longer test string' )));
+		$this->assertFalse( $String->endsWith( 'fail' ));
+		$this->assertFalse( $String->endsWith( 'longer test string' ));
 	}
 
 
@@ -150,7 +152,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 		$String = new String( 'hello %s' );
 		$String->arg( 'world' );
 
-		$this->assertEquals( $String->data( ), 'hello world' );
+		$this->assertEquals( $String->get( ), 'hello world' );
 		$this->assertEquals( $String->length( ), strlen( 'hello world' ));
 	}
 

@@ -5,25 +5,25 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace w;
+namespace fg\w;
 
 
 
 /**
  *	An utility class to manipulate strings.
  *
- *	@package w
+ *	@package fg.w
  */
 
 class String {
 
 	/**
-	 *	The actual string.
+	 *	The internal string.
 	 *
 	 *	@var string
 	 */
 
-	protected $_buffer = '';
+	protected $_string = '';
 
 
 
@@ -45,7 +45,7 @@ class String {
 
 	public function __construct( $string = '' ) {
 
-		$this->setData( $string );
+		$this->set( $string );
 	}
 
 
@@ -56,9 +56,38 @@ class String {
 	 *	@return string The internal string.
 	 */
 
-	public function buffer( ) {
+	public function __toString( ) {
 
-		return $this->_buffer;
+		return $this->_string;
+	}
+
+
+
+	/**
+	 *
+	 *
+	 *	@param \fg\w\String|string
+	 *	@return \fg\w\String String object.
+	 */
+
+	protected function _objectify( &$string ) {
+
+		if ( !( $string instanceof String )) {
+			$string = new String( $string );
+		}
+	}
+
+
+
+	/**
+	 *	Returns the internal string.
+	 *
+	 *	@return string The internal string.
+	 */
+
+	public function get( ) {
+
+		return $this->_string;
 	}
 
 
@@ -69,10 +98,10 @@ class String {
 	 *	@param string $buffer The new internal string.
 	 */
 
-	public function setBuffer( $buffer ) {
+	public function set( $buffer ) {
 
-		$this->_buffer = $buffer;
-		$this->_length = strlen( $this->_buffer );
+		$this->_string = $buffer;
+		$this->_length = strlen( $this->_string );
 	}
 
 
@@ -100,14 +129,14 @@ class String {
 	 *		otherwise null.
 	 */
 
-	public function char( $i ) {
+	public function at( $i ) {
 
 		if ( $i < 0 ) {
 			$i += $this->length( );
 		}
 
 		if (( $i >= 0 ) && ( $i < $this->length( ))) {
-			return $this->_buffer[ $i ];
+			return $this->_string[ $i ];
 		}
 
 		return null;
@@ -116,23 +145,31 @@ class String {
 
 
 	/**
+	 *	Finds the first position in which the given $String occurs in the string.
 	 *
+	 *	@param \fg\w\String|string $String
 	 */
 
-	public function indexOf( String $String ) {
+	public function indexOf( $String ) {
 
-		return strpos( $this->_buffer, $String->_buffer );
+		return ( $String instanceof String )
+			? strpos( $this->_string, $String->_string )
+			: strpos( $this->_string, $String );
 	}
 
 
 
 	/**
+	 *	Finds the last position in which the given $String occurs in the string.
 	 *
+	 *	@param \fg\w\String|string $String
 	 */
 
-	public function lastIndexOf( String $String ) {
+	public function lastIndexOf( $String ) {
 
-		return strrpos( $this->_buffer, $String->_buffer );
+		return ( $String instanceof String )
+			? strrpos( $this->_string, $String->_string )
+			: strrpos( $this->_string, $String );
 	}
 
 
@@ -140,11 +177,11 @@ class String {
 	/**
 	 *	Returns if the String contains the given String.
 	 *
-	 *	@param String $String
+	 *	@param \fg\w\String|string $String
 	 *	@return boolean True if the String contains $String, otherwise false.
 	 */
 
-	public function contains( String $String ) {
+	public function contains( $String ) {
 
 		return ( $this->indexOf( $String ) !== false );
 	}
@@ -154,11 +191,11 @@ class String {
 	/**
 	 *	Returns if the String starts with the given one.
 	 *
-	 *	@param String $String The starting string.
+	 *	@param \fg\w\String|string $String The starting string.
 	 *	@return boolean True if the String starts with $String, otherwise false.
 	 */
 
-	public function startsWith( String $String ) {
+	public function startsWith( $String ) {
 
 		return ( $this->indexOf( $String ) === 0 );
 	}
@@ -168,12 +205,13 @@ class String {
 	/**
 	 *	Returns if the String ends with the given one.
 	 *
-	 *	@param String $String The ending string.
+	 *	@param \fg\w\String|string $String The ending string.
 	 *	@return boolean True if the String ends with $String, otherwise false.
 	 */
 
-	public function endsWith( String $String ) {
+	public function endsWith( $String ) {
 
+		$this->_objectify( $String );
 		$gap = $this->length( ) - $String->length( );
 
 		return ( $this->lastIndexOf( $String ) === $gap );
@@ -191,7 +229,7 @@ class String {
 	public function arg( $arguments ) {
 
 		if ( func_num_args( ) > 0 ) {
-			$this->setData( vsprintf( $this->_buffer, func_get_args( )));
+			$this->set( vsprintf( $this->_string, func_get_args( )));
 		}
 	}
 
@@ -213,7 +251,7 @@ class String {
 			return false;
 		}
 
-		$parts = explode( $delimiter, $this->_buffer );
+		$parts = explode( $delimiter, $this->_string );
 
 		if ( $skipEmptyParts ) {
 			$parts = array_values(
