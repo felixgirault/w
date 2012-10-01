@@ -7,8 +7,7 @@
 
 namespace fg\w;
 
-require_once
-	dirname( dirname( __FILE__ ))
+require_once dirname( dirname( __FILE__ ))
 	. DIRECTORY_SEPARATOR . 'lib'
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
@@ -20,6 +19,10 @@ require_once
 
 if ( !defined( 'W_TEST')) {
 	define( 'W_TEST', dirname( __FILE__ ) . DIRECTORY_SEPARATOR );
+}
+
+if ( !defined( 'W_TEST_RESOURCES')) {
+	define( 'W_TEST_RESOURCES', W_TEST . 'resources' . DIRECTORY_SEPARATOR );
 }
 
 

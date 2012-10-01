@@ -7,8 +7,7 @@
 
 namespace fg\w;
 
-require_once
-	dirname( __FILE__ )
+require_once dirname( __FILE__ )
 	. DIRECTORY_SEPARATOR . 'fg'
 	. DIRECTORY_SEPARATOR . 'w'
 	. DIRECTORY_SEPARATOR . 'ClassLoader.php';

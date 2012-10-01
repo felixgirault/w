@@ -7,8 +7,7 @@
 
 namespace fg\w;
 
-require_once
-	dirname( dirname( dirname( __FILE__ )))
+require_once dirname( dirname( dirname( __FILE__ )))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 

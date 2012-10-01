@@ -23,19 +23,21 @@ class ClassLoader {
 	 *	@var array
 	 */
 
-	protected $_basePath = '';
+	protected $_path = '';
 
 
 
 	/**
 	 *	Constructor.
 	 *
-	 *	@param string $basePath Base include path for all class files.
+	 *	@param string $path Base include path for all class files.
 	 */
 
-	public function __construct( $basePath = '' ) {
+	public function __construct( $path = '' ) {
 
-		$this->_basePath = rtrim( $basePath, DIRECTORY_SEPARATOR );
+		$this->_path = is_dir( $path )
+			? rtrim( $path, DIRECTORY_SEPARATOR )
+			: dirname( $path );
 	}
 
 
@@ -52,6 +54,17 @@ class ClassLoader {
 
 
 	/**
+	 *	Registers this class loader on the SPL autoload stack.
+	 */
+
+	public function unregister( ) {
+
+		spl_autoload_unregister( array( $this, 'load' ));
+	}
+
+
+
+	/**
 	 *  Loads the given class or interface.
 	 *
 	 *  @param string $className Name of the class to load.
@@ -59,13 +72,13 @@ class ClassLoader {
 
 	public function load( $className ) {
 
-		$path = $this->_basePath
+		$path = $this->_path
 			. DIRECTORY_SEPARATOR
 			. str_replace( '\\', DIRECTORY_SEPARATOR, $className )
 			. '.php';
 
-		if ( file_exists( $path )) {
-			require_once $path;
+		if ( is_readable( $path )) {
+			require_once $path;var_dump($path);
 		}
 	}
 }
