@@ -5,17 +5,17 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Network;
 
 
 
 /**
- *	Curl is an object wrapper for the cURL library.
+ *	Handles HTTP related operations.
  *
- *	@package fg.w
+ *	@package fg.w.Network
  */
 
-class Curl {
+class Http {
 
 	/**
 	 *	CURL handle.
