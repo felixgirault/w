@@ -5,9 +5,9 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Core;
 
-require_once dirname( dirname( dirname( __FILE__ )))
+require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 

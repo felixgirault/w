@@ -39,4 +39,22 @@ class HttpRequest {
 
 	protected $_method = self::GET;
 
+
+
+	/**
+	 *
+	 */
+
+	protected $_header = array( );
+
+
+
+	/**
+	 *
+	 */
+
+	public function setHeader( $property, $value ) {
+
+	}
+
 }
