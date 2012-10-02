@@ -85,25 +85,25 @@ class Package {
 	 *	Scans the directory and returns the classes it contains.
 	 *	Note: This method doesn't deal with symlinks.
 	 *
-	 *	@param string $packages Sub packages in which to search for, relatively
+	 *	@param string $package Sub packages in which to search for, relatively
 	 *		to the base package path.
 	 *	@param boolean $recursive Whether or not to search recursively.
 	 *	@return array An array of directory and/or file paths.
 	 */
 
-	public function classes( $packages = array( ), $recursive = false ) {
+	public function classes( $package = array( ), $recursive = false ) {
 
 		$classes = array( );
-		$searchPath = empty( $packages )
+		$searchPath = empty( $package )
 			? $this->_path
-			: $this->_path . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $packages );
+			: $this->_path . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $package );
 
 		$entries = scandir( $searchPath );
 
 		if ( is_array( $entries )) {
 			foreach ( $entries as $entry ) {
 				$path = $searchPath . DIRECTORY_SEPARATOR . $entry;
-				$parts = $packages;
+				$parts = $package;
 				$parts[ ] = basename( $entry, '.php' );
 
 				if (

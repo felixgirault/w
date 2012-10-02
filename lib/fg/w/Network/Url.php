@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Network;
 
 
 
 /**
  *	An utility class to manipulate URLs.
  *
- *	@package fg.w
+ *	@package fg.w.Network
  */
 
 class Url {

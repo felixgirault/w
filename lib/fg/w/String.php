@@ -66,7 +66,7 @@ class String {
 	/**
 	 *
 	 *
-	 *	@param \fg\w\String|string
+	 *	@param String|string
 	 *	@return \fg\w\String String object.
 	 */
 
@@ -147,7 +147,7 @@ class String {
 	/**
 	 *	Finds the first position in which the given $String occurs in the string.
 	 *
-	 *	@param \fg\w\String|string $String
+	 *	@param String|string $String
 	 */
 
 	public function indexOf( $String ) {
@@ -162,7 +162,7 @@ class String {
 	/**
 	 *	Finds the last position in which the given $String occurs in the string.
 	 *
-	 *	@param \fg\w\String|string $String
+	 *	@param String|string $String
 	 */
 
 	public function lastIndexOf( $String ) {
@@ -177,7 +177,7 @@ class String {
 	/**
 	 *	Returns if the String contains the given String.
 	 *
-	 *	@param \fg\w\String|string $String
+	 *	@param String|string $String
 	 *	@return boolean True if the String contains $String, otherwise false.
 	 */
 
@@ -191,7 +191,7 @@ class String {
 	/**
 	 *	Returns if the String starts with the given one.
 	 *
-	 *	@param \fg\w\String|string $String The starting string.
+	 *	@param String|string $String The starting string.
 	 *	@return boolean True if the String starts with $String, otherwise false.
 	 */
 
@@ -205,7 +205,7 @@ class String {
 	/**
 	 *	Returns if the String ends with the given one.
 	 *
-	 *	@param \fg\w\String|string $String The ending string.
+	 *	@param String|string $String The ending string.
 	 *	@return boolean True if the String ends with $String, otherwise false.
 	 */
 
