@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Core;
 
 
 
 /**
  *	A simple PSR-0 compliant class loader.
  *
- *	@package fg.w
+ *	@package fg.w.Core
  */
 
 class ClassLoader {
@@ -78,7 +78,7 @@ class ClassLoader {
 			. '.php';
 
 		if ( is_readable( $path )) {
-			require_once $path;var_dump($path);
+			require_once $path;
 		}
 	}
 }

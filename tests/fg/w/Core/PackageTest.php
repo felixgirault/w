@@ -5,9 +5,9 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Core;
 
-require_once dirname( dirname( dirname( __FILE__ )))
+require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 
@@ -32,7 +32,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp( ) {
 
-		$this->Package = new Package( W_TEST_RESOURCES . 'Package' );
+		$this->Package = new Package( W_TEST_RESOURCES );
 	}
 
 
@@ -85,7 +85,7 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			array(
-				'FirstClass'
+				'Foo'
 			),
 			$this->Package->classes( )
 		);
@@ -101,8 +101,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			array(
-				'FirstClass',
-				'SubPackage\\SecondClass'
+				'Foo',
+				'Package\\Bar',
+				'Package\\SubPackage\\Baz'
 			),
 			$this->Package->classes( array( ), true )
 		);
@@ -118,9 +119,9 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			array(
-				'SubPackage\\SecondClass'
+				'Package\\Bar'
 			),
-			$this->Package->classes( array( 'SubPackage' ))
+			$this->Package->classes( array( 'Package' ))
 		);
 	}
 }

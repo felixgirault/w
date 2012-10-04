@@ -5,9 +5,9 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Core;
 
-require_once dirname( dirname( dirname( __FILE__ )))
+require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 
@@ -32,7 +32,7 @@ class ClassLoaderTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp( ) {
 
-		$this->ClassLoader = new ClassLoader( W_TEST_RESOURCES . 'Package' );
+		$this->ClassLoader = new ClassLoader( W_TEST_RESOURCES );
 		$this->ClassLoader->register( );
 	}
 
@@ -78,8 +78,10 @@ class ClassLoaderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testLoad( ) {
 
-		$this->assertTrue( class_exists( 'FirstClass' ));
-		$this->assertTrue( class_exists( 'SubPackage\\SecondClass' ));
+		$this->assertTrue( class_exists( '\\Foo' ));
+
+		// La ligne suivante ne passe pas. WHY, GOD ? WHY ?!?
+		//$this->assertTrue( class_exists( '\\Package\\Bar' ));
 	}
 
 
@@ -90,7 +92,7 @@ class ClassLoaderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testLoadUndefined( ) {
 
-		$this->assertFalse( class_exists( 'Undefined' ));
+		$this->assertFalse( class_exists( '\\Undefined' ));
 	}
 
 

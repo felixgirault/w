@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w;
+namespace fg\w\Core;
 
 
 
 /**
  *	Represents a package.
  *
- *	@package fg.w
+ *	@package fg.w.Core
  */
 
 class Package {
