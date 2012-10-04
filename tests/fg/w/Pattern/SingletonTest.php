@@ -50,7 +50,7 @@ class ConcreteSingleton {
  *	Test case for Singleton.
  */
 
-class SingletonTest /*extends \PHPUnit_Framework_TestCase*/ {
+class SingletonTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 *
