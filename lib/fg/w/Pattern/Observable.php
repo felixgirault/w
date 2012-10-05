@@ -15,7 +15,7 @@ namespace fg\w\Pattern;
  *	@package fg.w.Pattern
  */
 
-interface Observable {
+trait Observable {
 
 	/**
 	 *
@@ -29,9 +29,20 @@ interface Observable {
 	 *
 	 */
 
-	public function addObserver( Observer $Observer ) {
+	public function observers( ) {
 
-		if ( !in_array( $Observer, $this->_observers )) {
+		return $this->_observers;
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function addObserver( $Observer ) {
+
+		if ( !in_array( $Observer, $this->_observers )) {
 			$this->_observers[ ] = $Observer;
 		}
 	}
@@ -42,7 +53,7 @@ interface Observable {
 	 *
 	 */
 
-	public function removeObserver( Observer $Observer ) {
+	public function removeObserver( $Observer ) {
 
 		$index = array_search( $Observer, $this->_observers );
 
@@ -57,7 +68,7 @@ interface Observable {
 	 *
 	 */
 
-	public function dispatchEvent( $name, array $data = array( )) {
+	public function fireEvent( $name, array $data = array( )) {
 
 		foreach ( $this->_observers as $Observer ) {
 			$Observer->processEvent( $name, $data );

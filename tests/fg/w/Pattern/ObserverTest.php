@@ -40,8 +40,8 @@ class ObserverTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp( ) {
 
-		$this->Observer = new Observer( );
-		$this->Observable = $this->getMock( '\\fg\\w\\Pattern\\Observable' );
+		$this->Observer = new ConcreteObserver( );
+		$this->Observable = $this->getMock( '\\fg\\w\\Pattern\\ConcreteObservable' );
 	}
 
 

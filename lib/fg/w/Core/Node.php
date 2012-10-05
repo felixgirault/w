@@ -37,9 +37,30 @@ class Node implements \IteratorAggregate {
 	 *
 	 */
 
-	public function __construct( Node $Parent = null ) {
+	protected $_data = null;
+
+
+
+	/**
+	 *
+	 */
+
+	public function __construct( $data = null, Node $Parent = null ) {
 
 		$this->setParent( $Parent );
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function __destruct( ) {
+
+		foreach ( $this->_children as $Children ) {
+			unset( $Children );
+		}
 	}
 
 
@@ -62,6 +83,28 @@ class Node implements \IteratorAggregate {
 	public function getIterator( ) {
 
 		return new ArrayIterator( $this->_children );
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function data( ) {
+
+		return $this->_data;
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function setData( $data ) {
+
+		$this->_data = $data;
 	}
 
 

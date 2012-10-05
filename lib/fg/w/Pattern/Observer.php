@@ -15,15 +15,15 @@ namespace fg\w\Pattern;
  *	@package fg.w.Pattern
  */
 
-interface Observer {
+trait Observer {
 
 	/**
 	 *
 	 */
 
-	public function observe( Observable $Observable ) {
+	public function observe( $Observable ) {
 
-		$Observable->addObserver( $Observable );
+		$Observable->addObserver( $this );
 	}
 
 
@@ -32,9 +32,9 @@ interface Observer {
 	 *
 	 */
 
-	public function stopObserving( Observable $Observable ) {
+	public function stopObserving( $Observable ) {
 
-		$Observable->removeObserver( $Observable );
+		$Observable->removeObserver( $this );
 	}
 
 

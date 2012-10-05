@@ -39,6 +39,8 @@ trait Singleton {
 		if ( static::$_Instance === null ) {
 			static::$_Instance = new static;
 		}
+
+		return static::$_Instance;
 	}
 
 
@@ -55,7 +57,7 @@ trait Singleton {
 
 
 	/**
-	 *
+	 *	Prevents copy.
 	 */
 
 	final private function __clone( ) { }
@@ -63,7 +65,7 @@ trait Singleton {
 
 
 	/**
-	 *
+	 *	Prevents serialization.
 	 */
 
 	final private function __wakeup( ) { }
@@ -71,8 +73,7 @@ trait Singleton {
 
 
 	/**
-	 *	This method should be overriden in a class to initialize the Singleton
-	 *	object.
+	 *	This method should be overriden initialize the Singleton object.
 	 */
 
 	protected function _initialize( ) { }

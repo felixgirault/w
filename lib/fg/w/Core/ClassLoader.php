@@ -28,6 +28,16 @@ class ClassLoader {
 
 
 	/**
+	 *
+	 *
+	 *	@var callback
+	 */
+
+	protected $_callback = null;
+
+
+
+	/**
 	 *	Constructor.
 	 *
 	 *	@param string $path Base include path for all class files.
@@ -38,6 +48,21 @@ class ClassLoader {
 		$this->_path = is_dir( $path )
 			? rtrim( $path, DIRECTORY_SEPARATOR )
 			: dirname( $path );
+
+		$this->_callback = array( $this, 'load' );
+	}
+
+
+
+	/**
+	 *	Tells if the class loader is registered on the SPL autoload stack.
+	 *
+	 *	@return boolean Whether the class loader is registered or not.
+	 */
+
+	public function isRegistered( ) {
+
+		return in_array( $this->_callback, spl_autoload_functions( ));
 	}
 
 
@@ -48,7 +73,7 @@ class ClassLoader {
 
 	public function register( ) {
 
-		spl_autoload_register( array( $this, 'load' ));
+		spl_autoload_register( $this->_callback );
 	}
 
 
@@ -59,7 +84,7 @@ class ClassLoader {
 
 	public function unregister( ) {
 
-		spl_autoload_unregister( array( $this, 'load' ));
+		spl_autoload_unregister( $this->_callback );
 	}
 
 

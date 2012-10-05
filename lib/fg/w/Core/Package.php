@@ -18,7 +18,7 @@ namespace fg\w\Core;
 class Package {
 
 	/**
-	 *	Root path to the package.
+	 *	Path to the package.
 	 *
 	 *	@var string
 	 */
@@ -40,7 +40,7 @@ class Package {
 	/**
 	 *	Constructs a package located at the given path.
 	 *
-	 *	@param string $path Root path to the package.
+	 *	@param string $path Path to the package.
 	 *	@param string $separator Packages separator.
 	 */
 
@@ -56,7 +56,7 @@ class Package {
 
 
 	/**
-	 *	Returns the root path to the package.
+	 *	Returns the path to the package.
 	 *
 	 *	@return string Path.
 	 */
@@ -64,6 +64,19 @@ class Package {
 	public function path( ) {
 
 		return $this->_path;
+	}
+
+
+
+	/**
+	 *	Sets the path to the package.
+	 *
+	 *	@param string Path.
+	 */
+
+	public function setPath( $path ) {
+
+		$this->_path = $path;
 	}
 
 
@@ -77,6 +90,19 @@ class Package {
 	public function separator( ) {
 
 		return $this->_separator;
+	}
+
+
+
+	/**
+	 *	Sets the package separator.
+	 *
+	 *	@param string Separator.
+	 */
+
+	public function setSeparator( $separator ) {
+
+		$this->_separator = $separator;
 	}
 
 
