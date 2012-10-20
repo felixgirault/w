@@ -21,28 +21,6 @@ trait Observer {
 	 *
 	 */
 
-	public function observe( $Observable ) {
-
-		$Observable->addObserver( $this );
-	}
-
-
-
-	/**
-	 *
-	 */
-
-	public function stopObserving( $Observable ) {
-
-		$Observable->removeObserver( $this );
-	}
-
-
-
-	/**
-	 *
-	 */
-
 	abstract public function processEvent( $name, array $data = array( ));
 
 }

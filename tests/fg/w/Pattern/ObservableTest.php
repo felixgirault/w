@@ -50,7 +50,7 @@ class ObservableTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 */
 
-	public function testAddObserver( ) {
+	public function testAttach( ) {
 
 
 	}
@@ -61,7 +61,7 @@ class ObservableTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 */
 
-	public function testRemoveObserver( ) {
+	public function testDetach( ) {
 
 
 	}

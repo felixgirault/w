@@ -28,7 +28,7 @@ class ClassLoader {
 
 
 	/**
-	 *
+	 *	The callback method to be registered as the autoload function.
 	 *
 	 *	@var callback
 	 */

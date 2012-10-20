@@ -82,7 +82,7 @@ class Node implements \IteratorAggregate {
 
 	public function getIterator( ) {
 
-		return new ArrayIterator( $this->_children );
+		return new \ArrayIterator( $this->_children );
 	}
 
 

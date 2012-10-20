@@ -13,40 +13,6 @@ require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 
 
 /**
- *
- */
-
-class ConcreteSingleton {
-
-	/**
-	 *
-	 */
-
-	use Singleton;
-
-
-
-	/**
-	 *
-	 */
-
-	public $initialized = false;
-
-
-
-	/**
-	 *
-	 */
-
-	protected function _initialize( ) {
-
-		$this->initialized = true;
-	}
-}
-
-
-
-/**
  *	Test case for Singleton.
  */
 

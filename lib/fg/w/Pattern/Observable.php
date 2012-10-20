@@ -40,7 +40,7 @@ trait Observable {
 	 *
 	 */
 
-	public function addObserver( $Observer ) {
+	public function attach( Observer $Observer ) {
 
 		if ( !in_array( $Observer, $this->_observers )) {
 			$this->_observers[ ] = $Observer;
@@ -53,7 +53,7 @@ trait Observable {
 	 *
 	 */
 
-	public function removeObserver( $Observer ) {
+	public function detach( Observer $Observer ) {
 
 		$index = array_search( $Observer, $this->_observers );
 
