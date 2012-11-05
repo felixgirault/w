@@ -53,31 +53,28 @@ class Http {
 
 
 	/**
-	 *	Configures cURL by different ways.
 	 *
-	 *	$Curly->configure( CURLOPT );
 	 *
-	 *	@param CURLOPT|array $key Either a CURLOPT constant if $value is a
-	 *		boolean, or an array of CURLOPT constants if $value is an array
-	 *		of values, or an array of ( CURLOPT => value ) if $value is null.
-	 *	@param boolean|array $value Either a boolean if $key is a CURLOPT, or
-	 *		an array of values if $key is an array of CURLOPTs, or null if
-	 *		$key is an array of ( CURLOPT => value ).
+	 *	@param CURLOPT $option Option name.
+	 *	@param mixed $value Option value.
 	 */
 
-	public function configure( $key, $value = null ) {
+	public function setOption( $option, $value ) {
 
-		if ( is_array( $key )) {
-			if ( is_array( $value )) {
-				$settings = array_combine( $key, $value );
-			} else {
-				$settings = $key;
-			}
-		} else {
-			$settings = array( $key => $value );
-		}
+		curl_setopt( $this->_curl, $option, $value );
+	}
 
-		curl_setopt_array( $this->_curl, $settings );
+
+
+	/**
+	 *
+	 *
+	 *	@param array $options
+	 */
+
+	public function setOptions( array $options ) {
+
+		curl_setopt_array( $this->_curl, $options );
 	}
 
 

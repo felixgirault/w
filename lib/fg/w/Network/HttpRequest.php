@@ -39,8 +39,6 @@ class HttpRequest {
 
 	protected $_method = self::GET;
 
-<<<<<<< HEAD
-=======
 
 
 	/**
@@ -58,6 +56,4 @@ class HttpRequest {
 	public function setHeader( $property, $value ) {
 
 	}
-
->>>>>>> 1d3a1ff6062b2c379acc53cc1151a5919b5af14c
 }
