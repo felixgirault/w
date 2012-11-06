@@ -15,10 +15,12 @@ namespace fg\w\Core;
  *	@package fg.w.Core
  */
 
-class Node implements \IteratorAggregate {
+class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 	/**
+	 *	Parent node.
 	 *
+	 *	@var Node
 	 */
 
 	protected $_Parent = null;
@@ -26,7 +28,9 @@ class Node implements \IteratorAggregate {
 
 
 	/**
+	 *	Child nodes.
 	 *
+	 *	@var array
 	 */
 
 	protected $_children = array( );
@@ -141,13 +145,13 @@ class Node implements \IteratorAggregate {
 			return;
 		}
 
-		if ( $this->_Parent !== null ) {
+		if ( $this->hasParent( )) {
 			$this->_Parent->_remove( $this );
 		}
 
 		$this->_Parent = $Parent;
 
-		if ( $this->_Parent !== null ) {
+		if ( $this->hasParent( )) {
 			$this->_Parent->_add( $this );
 		}
 	}
@@ -231,7 +235,9 @@ class Node implements \IteratorAggregate {
 
 
 	/**
+	 *	Removes the given child node.
 	 *
+	 *	@param Node Child node to remove.
 	 */
 
 	protected function _remove( Node $Child ) {
@@ -246,7 +252,9 @@ class Node implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns if the node has any sibling.
 	 *
+	 *	@return boolean Whether the node has siblings or not.
 	 */
 
 	public function hasSiblings( ) {
@@ -265,17 +273,15 @@ class Node implements \IteratorAggregate {
 		$siblings = $this->_Parent->children( );
 		$index = array_search( $this, $siblings );
 
-		if ( $index !== false ) {
-			unset( $siblings[ $index ]);
-		}
-
+		unset( $siblings[ $index ]);
 		return $siblings;
 	}
 
 
 
 	/**
-	 *
+	 *	Detaches the node from the tree by attaching all it's children to it's
+	 *	parent.
 	 */
 
 	public function detach( ) {
@@ -284,30 +290,55 @@ class Node implements \IteratorAggregate {
 			$Child->setParent( $this->_Parent );
 		}
 
-		if ( $this->_Parent !== null ) {
+		if ( $this->hasParent( )) {
 			$this->_Parent->removeChild( $this );
 		}
-
-		$this->_Parent = null;
 	}
 
 
 
 	/**
+	 *	Returns the depth of the node, i.e. the length of the path from the
+	 *	root to the node.
 	 *
+	 *	@return integer Node depth.
 	 */
 
 	public function depth( ) {
 
-		return ( $this->_Parent === null )
-			? 0
-			: ( $this->_Parent->depth( ) + 1 );
+		return $this->hasParent( )
+			? $this->_Parent->depth( ) + 1
+			: 0;
 	}
 
 
 
 	/**
+	 *	Returns the height of the node, i.e. the longest downward path to a leaf.
 	 *
+	 *	@return integer Node height.
+	 */
+
+	public function height( ) {
+
+		$height = 0;
+
+		foreach ( $this->_children as $Child ) {
+			if ( $Child->height( ) > $height ) {
+				$height = $Child->height( );
+			}
+		}
+
+		return $height;
+	}
+
+
+
+	/**
+	 *	Returns the size of the node, i.e. the number of descendants it has
+	 *	including itself.
+	 *
+	 *	@return integer Node size.
 	 */
 
 	public function size( ) {

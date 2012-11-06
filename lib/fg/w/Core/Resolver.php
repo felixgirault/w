@@ -47,21 +47,21 @@ class Resolver {
 
 	public function __construct( array $dependencies ) {
 
-		foreach ( $dependencies as $nodeName => $nodeDependencies ) {
-			if ( !isset( $this->_nodes[ $nodeName ])) {
-				$this->_nodes[ $nodeName ] = new Node( );
+		foreach ( $dependencies as $name => $deps ) {
+			if ( !isset( $this->_nodes[ $name ])) {
+				$this->_nodes[ $name ] = new Node( );
 			}
 
-			if ( !is_array( $nodeDependencies )) {
-				$nodeDependencies = array( $nodeDependencies );
+			if ( !is_array( $deps )) {
+				$deps = array( $deps );
 			}
 
-			foreach ( $nodeDependencies as $dependency ) {
+			foreach ( $deps as $dependency ) {
 				if ( !isset( $this->_nodes[ $dependency ])) {
 					$this->_nodes[ $dependency ] = new Node( );
 				}
 
-				$this->_nodes[ $nodeName ]->addChild( $this->_nodes[ $dependency ]);
+				$this->_nodes[ $name ]->addChild( $this->_nodes[ $dependency ]);
 			}
 		}
 	}

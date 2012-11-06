@@ -73,7 +73,7 @@ trait Singleton {
 
 
 	/**
-	 *	This method should be overriden initialize the object.
+	 *	This method should be overriden to initialize the object.
 	 */
 
 	protected function _initialize( ) { }

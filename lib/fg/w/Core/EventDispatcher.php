@@ -15,7 +15,7 @@ namespace fg\w\Core;
  *	@package fg.w.Core
  */
 
-class Messager {
+class EventDipatcher {
 
 	/**
 	 *
@@ -34,7 +34,7 @@ class Messager {
 	 *	@param mixed $data The data to send to the subscribers.
 	 */
 
-	public function send( $event, $data ) {
+	public function dispatch( $event, $data ) {
 
 		if ( isset( $this->_subscribers[ $event ])) {
 			foreach ( $this->_subscribers[ $event ] as $callback ) {
