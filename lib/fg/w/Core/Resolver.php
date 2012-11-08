@@ -21,14 +21,6 @@ class Resolver {
 	 *
 	 */
 
-	const visited = 'visited';
-
-
-
-	/**
-	 *
-	 */
-
 	protected $_nodes = array( );
 
 
@@ -49,7 +41,12 @@ class Resolver {
 
 		foreach ( $dependencies as $name => $deps ) {
 			if ( !isset( $this->_nodes[ $name ])) {
-				$this->_nodes[ $name ] = new Node( );
+				$this->_nodes[ $name ] = new Node(
+					array(
+						'name' => $name,
+						'visited' => false
+					)
+				);
 			}
 
 			if ( !is_array( $deps )) {
@@ -76,9 +73,9 @@ class Resolver {
 
 		$this->_sorted = array( );
 
-		foreach ( $this->_nodes as $name => $Node ) {
+		foreach ( $this->_nodes as $Node ) {
 			if ( !$Node->hasParent( )) {
-				self::_visit( $name, $Node );
+				self::_visit( $Node );
 			}
 		}
 
@@ -91,16 +88,16 @@ class Resolver {
 	 *
 	 */
 
-	protected function _visit( $name, Node &$Node ) {
+	protected function _visit( Node &$Node ) {
 
-		if ( $Node->data( ) != self::visited ) {
-			$Node->setData( self::visited );
+		if ( !$Node->visited ) {
+			$Node->visited = true;
 
 			foreach ( $Node as $Child ) {
-				self::_visit( array_search( $Child, $this->_nodes ), $Child );
+				self::_visit( $Child );
 			}
 
-			$this->_sorted[ ] = $name;
+			$this->_sorted[ ] = $Node->name;
 		}
 	}
 }

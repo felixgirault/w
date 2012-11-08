@@ -23,7 +23,7 @@ class String {
 	 *	@var string
 	 */
 
-	protected $_string = '';
+	protected $_buffer = '';
 
 
 
@@ -58,23 +58,7 @@ class String {
 
 	public function __toString( ) {
 
-		return $this->_string;
-	}
-
-
-
-	/**
-	 *
-	 *
-	 *	@param String|string
-	 *	@return \fg\w\String String object.
-	 */
-
-	protected function _objectify( &$string ) {
-
-		if ( !( $string instanceof String )) {
-			$string = new String( $string );
-		}
+		return $this->_buffer;
 	}
 
 
@@ -85,9 +69,9 @@ class String {
 	 *	@return string The internal string.
 	 */
 
-	public function get( ) {
+	public function buffer( ) {
 
-		return $this->_string;
+		return $this->_buffer;
 	}
 
 
@@ -98,10 +82,10 @@ class String {
 	 *	@param string $buffer The new internal string.
 	 */
 
-	public function set( $buffer ) {
+	public function setBuffer( $buffer ) {
 
-		$this->_string = $buffer;
-		$this->_length = strlen( $this->_string );
+		$this->_buffer = $buffer;
+		$this->_length = strlen( $this->_buffer );
 	}
 
 
@@ -132,11 +116,11 @@ class String {
 	public function at( $i ) {
 
 		if ( $i < 0 ) {
-			$i += $this->length( );
+			$i += $this->_length;
 		}
 
-		if (( $i >= 0 ) && ( $i < $this->length( ))) {
-			return $this->_string[ $i ];
+		if (( $i >= 0 ) && ( $i < $this->_length )) {
+			return $this->_buffer[ $i ];
 		}
 
 		return null;
@@ -152,9 +136,7 @@ class String {
 
 	public function indexOf( $String ) {
 
-		return ( $String instanceof String )
-			? strpos( $this->_string, $String->_string )
-			: strpos( $this->_string, $String );
+		return strpos( $this->_buffer, $String );
 	}
 
 
@@ -167,9 +149,7 @@ class String {
 
 	public function lastIndexOf( $String ) {
 
-		return ( $String instanceof String )
-			? strrpos( $this->_string, $String->_string )
-			: strrpos( $this->_string, $String );
+		return strrpos( $this->_buffer, $String );
 	}
 
 
@@ -212,7 +192,7 @@ class String {
 	public function endsWith( $String ) {
 
 		$this->_objectify( $String );
-		$gap = $this->length( ) - $String->length( );
+		$gap = $this->_length - $String->_length;
 
 		return ( $this->lastIndexOf( $String ) === $gap );
 	}
@@ -229,7 +209,7 @@ class String {
 	public function arg( $arguments ) {
 
 		if ( func_num_args( ) > 0 ) {
-			$this->set( vsprintf( $this->_string, func_get_args( )));
+			$this->set( vsprintf( $this->_buffer, func_get_args( )));
 		}
 	}
 
@@ -239,21 +219,21 @@ class String {
 	 *	Splits the String in multiple parts, delimited by $delimiter.
 	 *
 	 *	@param string $delimiter Parts delimiter.
-	 *	@param boolean $skipEmptyParts Whether or not to remove empty parts from
+	 *	@param boolean $skipEmpty Whether or not to remove empty parts from
 	 *		the returned array.
 	 *	@return mixed An array of parts, or false if $delimiter is an empty
 	 *		string.
 	 */
 
-	public function split( $delimiter, $skipEmptyParts = true ) {
+	public function split( $delimiter, $skipEmpty = true ) {
 
-		if ( $delimiter === '' ) {
-			return false;
+		if ( !is_string( $delimiter ) || empty( $delimiter )) {
+			throw new InvalidArgumentException( 'The delimiter must be a non-empty string' );
 		}
 
-		$parts = explode( $delimiter, $this->_string );
+		$parts = explode( $delimiter, $this->_buffer );
 
-		if ( $skipEmptyParts ) {
+		if ( $skipEmpty ) {
 			$parts = array_values(
 				array_filter(
 					$parts,
@@ -265,5 +245,21 @@ class String {
 		}
 
 		return $parts;
+	}
+
+
+
+	/**
+	 *
+	 *
+	 *	@param String|string
+	 *	@return \fg\w\String String object.
+	 */
+
+	protected function _objectify( &$string ) {
+
+		if ( !( $string instanceof String )) {
+			$string = new String( $string );
+		}
 	}
 }
