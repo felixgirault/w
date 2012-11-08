@@ -78,7 +78,7 @@ class Store {
 			}
 		}
 
-		return isset( $data[ $key ]);
+		return array_key_exists( $key, $data );
 	}
 
 
@@ -151,7 +151,7 @@ class Store {
 			}
 		}
 
-		if ( isset( $data[ $key ])) {
+		if ( array_key_exists( $key, $data )) {
 			return $data[ $key ];
 		}
 
@@ -196,7 +196,7 @@ class Store {
 			}
 		}
 
-		if ( isset( $data[ $key ])) {
+		if ( array_key_exists( $key, $data )) {
 			unset( $data[ $key ]);
 		}
 	}
