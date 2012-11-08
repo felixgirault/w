@@ -125,7 +125,9 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns the parent node.
 	 *
+	 *	@return Node|null Parent.
 	 */
 
 	public function parent( ) {

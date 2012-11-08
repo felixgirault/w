@@ -120,9 +120,12 @@ class Package {
 	public function classes( $package = array( ), $recursive = false ) {
 
 		$classes = array( );
-		$searchPath = empty( $package )
-			? $this->_path
-			: $this->_path . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $package );
+		$searchPath $this->_path;
+
+		if ( !empty( $package )) {
+			$searchPath .= DIRECTORY_SEPARATOR
+				. implode( DIRECTORY_SEPARATOR, $package );
+		}
 
 		$entries = scandir( $searchPath );
 
