@@ -120,7 +120,7 @@ class Package {
 	public function classes( $package = array( ), $recursive = false ) {
 
 		$classes = array( );
-		$searchPath $this->_path;
+		$searchPath = $this->_path;
 
 		if ( !empty( $package )) {
 			$searchPath .= DIRECTORY_SEPARATOR

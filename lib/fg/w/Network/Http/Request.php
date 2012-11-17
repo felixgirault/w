@@ -5,17 +5,17 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Network;
+namespace fg\w\Network\Http;
 
 
 
 /**
  *	Represents a HTTP request.
  *
- *	@package fg.w.Network
+ *	@package fg.w.Network.Http
  */
 
-class HttpRequest {
+class Request {
 
 	/**
 	 *

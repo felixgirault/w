@@ -37,25 +37,20 @@ class Resolver {
 	 *
 	 */
 
-	public function __construct( array $dependencies ) {
+	public function __construct( array $elements ) {
 
-		foreach ( $dependencies as $name => $deps ) {
+		foreach ( $elements as $name => $dependencies ) {
 			if ( !isset( $this->_nodes[ $name ])) {
-				$this->_nodes[ $name ] = new Node(
-					array(
-						'name' => $name,
-						'visited' => false
-					)
-				);
+				$this->_nodes[ $name ] = new Node( array( 'name' => $name ));
 			}
 
-			if ( !is_array( $deps )) {
-				$deps = array( $deps );
+			if ( !is_array( $dependencies )) {
+				$dependencies = array( $dependencies );
 			}
 
-			foreach ( $deps as $dependency ) {
+			foreach ( $dependencies as $dependency ) {
 				if ( !isset( $this->_nodes[ $dependency ])) {
-					$this->_nodes[ $dependency ] = new Node( );
+					$this->_nodes[ $dependency ] = new Node( array( 'name' => $dependency ));
 				}
 
 				$this->_nodes[ $name ]->addChild( $this->_nodes[ $dependency ]);
@@ -90,14 +85,14 @@ class Resolver {
 
 	protected function _visit( Node &$Node ) {
 
-		if ( !$Node->visited ) {
-			$Node->visited = true;
+		if ( !$Node->property( 'visited', false )) {
+			$Node->setProperty( 'visited', true );
 
 			foreach ( $Node as $Child ) {
 				self::_visit( $Child );
 			}
 
-			$this->_sorted[ ] = $Node->name;
+			$this->_sorted[ ] = $Node->property( 'name' );
 		}
 	}
 }

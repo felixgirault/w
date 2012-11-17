@@ -151,7 +151,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 		$String = new String( 'hello %s' );
 		$String->arg( 'world' );
 
-		$this->assertEquals( $String->get( ), 'hello world' );
+		$this->assertEquals( $String->buffer( ), 'hello world' );
 		$this->assertEquals( $String->length( ), strlen( 'hello world' ));
 	}
 
@@ -165,8 +165,21 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$String = new String( 'test,,string' );
 
-		$this->assertFalse( $String->split( '' ));
 		$this->assertEquals( $String->split( ',' ), array( 'test', 'string' ));
 		$this->assertEquals( $String->split( ',', false ), array( 'test', '', 'string' ));
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function testSplitWithInvalidDelimiter( ) {
+
+		$this->setExpectedException( 'InvalidArgumentException' );
+
+		$String = new String( 'test,,string' );
+		$String->split( '' );
 	}
 }

@@ -45,7 +45,7 @@ class String {
 
 	public function __construct( $string = '' ) {
 
-		$this->set( $string );
+		$this->setBuffer( $string );
 	}
 
 
@@ -136,7 +136,7 @@ class String {
 
 	public function indexOf( $String ) {
 
-		return strpos( $this->_buffer, $String );
+		return strpos( $this->_buffer, ( string )$String );
 	}
 
 
@@ -149,7 +149,7 @@ class String {
 
 	public function lastIndexOf( $String ) {
 
-		return strrpos( $this->_buffer, $String );
+		return strrpos( $this->_buffer, ( string )$String );
 	}
 
 
@@ -209,7 +209,7 @@ class String {
 	public function arg( $arguments ) {
 
 		if ( func_num_args( ) > 0 ) {
-			$this->set( vsprintf( $this->_buffer, func_get_args( )));
+			$this->setBuffer( vsprintf( $this->_buffer, func_get_args( )));
 		}
 	}
 
@@ -228,7 +228,7 @@ class String {
 	public function split( $delimiter, $skipEmpty = true ) {
 
 		if ( !is_string( $delimiter ) || empty( $delimiter )) {
-			throw new InvalidArgumentException( 'The delimiter must be a non-empty string' );
+			throw new \InvalidArgumentException( 'The delimiter must be a non-empty string' );
 		}
 
 		$parts = explode( $delimiter, $this->_buffer );
@@ -250,10 +250,10 @@ class String {
 
 
 	/**
-	 *
+	 *	If $string is a regular string, returns a String object wrapping it.
 	 *
 	 *	@param String|string
-	 *	@return \fg\w\String String object.
+	 *	@return String String object.
 	 */
 
 	protected function _objectify( &$string ) {

@@ -5,20 +5,22 @@
  *  @license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Pattern;
+namespace fg\w\Event;
 
 
 
 /**
  *
  *
- *	@package fg.w.Pattern
+ *	@package fg.w.Event
  */
 
 trait Observable {
 
 	/**
+	 *	Collection of observers.
 	 *
+	 *	@var array
 	 */
 
 	protected $_observers = array( );
@@ -26,23 +28,14 @@ trait Observable {
 
 
 	/**
+	 *	Attaches an observer to be notified on events.
 	 *
-	 */
-
-	public function observers( ) {
-
-		return $this->_observers;
-	}
-
-
-
-	/**
-	 *
+	 *	@param Observer $Observer Observer to attach.
 	 */
 
 	public function attach( Observer $Observer ) {
 
-		if ( !in_array( $Observer, $this->_observers )) {
+		if ( !in_array( $Observer, $this->_observers, true )) {
 			$this->_observers[ ] = $Observer;
 		}
 	}
@@ -50,12 +43,14 @@ trait Observable {
 
 
 	/**
+	 *	Detaches an observer.
 	 *
+	 *	@param Observer $Observer Observer to detach.
 	 */
 
 	public function detach( Observer $Observer ) {
 
-		$index = array_search( $Observer, $this->_observers );
+		$index = array_search( $Observer, $this->_observers, true );
 
 		if ( $index !== false ) {
 			unset( $this->_observers[ $index ]);
@@ -65,13 +60,15 @@ trait Observable {
 
 
 	/**
+	 *	Sends an event to all attached observers.
 	 *
+	 *	@param Event $Event The event to send.
 	 */
 
-	public function fireEvent( $name, array $data = array( )) {
+	public function notify( Event $Event ) {
 
 		foreach ( $this->_observers as $Observer ) {
-			$Observer->processEvent( $name, $data );
+			$Observer->handle( $Event );
 		}
 	}
 }

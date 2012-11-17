@@ -92,7 +92,7 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 	public function __get( $name ) {
 
 		if ( !array_key_exists( $name, $this->_properties )) {
-			throw new OutOfBoundsException( "The property '$name' does not exist." );
+			throw new \OutOfBoundsException( "The '$name' property does not exist." );
 		}
 
 		return $this->_properties[ $name ];
@@ -152,9 +152,9 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 	 *
 	 */
 
-	public function setProperty( $name, $value ) {
+	public function properties( ) {
 
-		$this->_properties[ $name ] = $value;
+		return $this->_properties;
 	}
 
 
@@ -163,9 +163,9 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 	 *
 	 */
 
-	public function properties( ) {
+	public function setProperty( $name, $value ) {
 
-		return $this->_properties;
+		$this->_properties[ $name ] = $value;
 	}
 
 

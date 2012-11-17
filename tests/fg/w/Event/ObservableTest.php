@@ -5,7 +5,7 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Pattern;
+namespace fg\w\Event;
 
 require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';

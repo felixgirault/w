@@ -5,14 +5,14 @@
  *  @license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Pattern;
+namespace fg\w\Event;
 
 
 
 /**
  *
  *
- *	@package fg.w.Pattern
+ *	@package fg.w.Event
  */
 
 trait Observer {
@@ -21,6 +21,6 @@ trait Observer {
 	 *
 	 */
 
-	abstract public function processEvent( $name, array $data = array( ));
+	abstract public function handle( Event $Event );
 
 }

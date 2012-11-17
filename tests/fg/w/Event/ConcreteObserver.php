@@ -5,7 +5,7 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Pattern;
+namespace fg\w\Event;
 
 
 
@@ -13,12 +13,20 @@ namespace fg\w\Pattern;
  *
  */
 
-class ConcreteObservable {
+class ConcreteObserver {
 
 	/**
 	 *
 	 */
 
-	use Observable;
+	use Observer;
+
+
+
+	/**
+	 *
+	 */
+
+	public function handle( Event $Event ) { }
 
 }

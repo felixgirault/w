@@ -18,9 +18,11 @@ namespace fg\w\Pattern;
 interface Visitor {
 
 	/**
+	 *	Visits the given visitable object.
 	 *
+	 *	@param Visitable $Visitable Object to visit.
 	 */
 
-	public function accept( Visitable $Visitable );
+	public function visit( Visitable $Visitable );
 
 }
