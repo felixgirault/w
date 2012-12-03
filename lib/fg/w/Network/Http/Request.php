@@ -7,6 +7,8 @@
 
 namespace fg\w\Network\Http;
 
+use \fg\w\Network;
+
 
 
 /**
@@ -21,15 +23,15 @@ class Request {
 	 *
 	 */
 
-	const HEAD = 0;
-	const GET = 1;
-	const POST = 2;
-	const PUT = 3;
-	const DELETE = 4;
-	const TRACE = 5;
-	const OPTIONS = 6;
-	const CONNECT = 7;
-	const PATCH = 8;
+	const head = 0;
+	const get = 1;
+	const post = 2;
+	const put = 3;
+	const delete = 4;
+	const trace = 5;
+	const options = 6;
+	const connect = 7;
+	const patch = 8;
 
 
 
@@ -37,7 +39,15 @@ class Request {
 	 *
 	 */
 
-	protected $_method = self::GET;
+	protected $_Url = null;
+
+
+
+	/**
+	 *
+	 */
+
+	protected $_method = self::get;
 
 
 

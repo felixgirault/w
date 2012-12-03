@@ -7,6 +7,8 @@
 
 namespace fg\w\Network\Http;
 
+use \fg\w\Network;
+
 
 
 /**
@@ -21,7 +23,7 @@ class Response {
 	 *
 	 */
 
-	protected $_statuses = array(
+	const statuses = array(
 		404 => 'Not found'
 	);
 
@@ -31,6 +33,45 @@ class Response {
 	 *
 	 */
 
+	protected $_Url = null;
+
+
+
+	/**
+	 *
+	 */
+
 	protected $_status;
 
+
+
+	/**
+	 *
+	 */
+
+	public function __construct( Url $Url ) {
+
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function status( ) {
+
+		return $this->_status;
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function statusMessage( ) {
+
+		return $this->_statuses[ $this->_status ];
+	}
 }

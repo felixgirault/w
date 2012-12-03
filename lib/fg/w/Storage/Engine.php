@@ -11,17 +11,17 @@ namespace fg\w\Storage;
 
 /**
  *
+ *
+ *	@package fg.w.Storage
  */
 
-class Engine {
+interface Engine {
 
 	/**
 	 *
 	 */
 
-	public function getOne( $type, $id ) {
-
-	}
+	public function has( $key );
 
 
 
@@ -29,7 +29,30 @@ class Engine {
 	 *
 	 */
 
-	public function getAll( $type, $id ) {
+	public function read( $key, $default = null );
 
-	}
+
+
+	/**
+	 *
+	 */
+
+	public function write( $key, $value );
+
+
+
+	/**
+	 *
+	 */
+
+	public function delete( $key );
+
+
+
+	/**
+	 *
+	 */
+
+	public function clear( );
+
 }

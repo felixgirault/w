@@ -15,7 +15,7 @@ namespace fg\w\Pattern;
  *	@package fg.w.Pattern
  */
 
-trait CircuitBreaker {
+class CircuitBreaker {
 
 	/**
 	 *

@@ -34,7 +34,7 @@ trait Singleton {
 	 *	@return Singleton Singleton instance
 	 */
 
-	final public static function instance( ) {
+	final public static function &instance( ) {
 
 		if ( static::$_Instance === null ) {
 			static::$_Instance = new static;
@@ -42,6 +42,14 @@ trait Singleton {
 
 		return static::$_Instance;
 	}
+
+
+
+	/**
+	 *	This method should be overriden to initialize the object.
+	 */
+
+	protected function _initialize( ) { }
 
 
 
@@ -69,13 +77,5 @@ trait Singleton {
 	 */
 
 	final private function __wakeup( ) { }
-
-
-
-	/**
-	 *	This method should be overriden to initialize the object.
-	 */
-
-	protected function _initialize( ) { }
 
 }
