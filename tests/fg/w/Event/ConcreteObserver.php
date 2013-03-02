@@ -27,6 +27,6 @@ class ConcreteObserver {
 	 *
 	 */
 
-	public function handle( Event $Event ) { }
+	public function handle( $event ) { }
 
 }

@@ -5,7 +5,7 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Network;
+namespace fg\w\Http;
 
 require_once dirname( dirname( dirname( dirname( __FILE__ ))))
 	. DIRECTORY_SEPARATOR . 'bootstrap.php';
@@ -41,11 +41,63 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 */
 
+	public function testStringToComponents( ) {
+
+		$this->Url->setString( 'http://user:password@www.example.com:80/index.php?foo=bar#fragment' );
+
+		$this->assertEquals(
+			array(
+				Url::scheme => 'http',
+				Url::user => 'user',
+				Url::password => 'password',
+				Url::host => 'www.example.com',
+				Url::port => '80',
+				Url::path => 'index.php',
+				Url::params => array( 'foo' => 'bar' ),
+				Url::fragment => 'fragment'
+			),
+			$this->Url->components
+		);
+	}
+
+
+
+	/**
+	 *
+	 */
+
+	public function testComponentsToString( ) {
+
+		$this->Url->setComponents(
+			array(
+				Url::scheme => 'http',
+				Url::user => 'user',
+				Url::password => 'password',
+				Url::host => 'www.example.com',
+				Url::port => '80',
+				Url::path => 'index.php',
+				Url::params => array( 'foo' => 'bar' ),
+				Url::fragment => 'fragment'
+			)
+		);
+
+		$this->assertEquals(
+			'http://user:password@www.example.com:80/index.php?foo=bar#fragment',
+			$this->Url->string( )
+		);
+	}
+
+
+
+	/**
+	 *
+	 */
+
 	public function testScheme( ) {
 
 		$this->assertFalse( $this->Url->hasScheme( ));
 
-		$this->Url->set( 'http://www.example.com' );
+		$this->Url->setString( 'http://www.example.com' );
 		$this->assertTrue( $this->Url->hasScheme( ));
 		$this->assertEquals( 'http', $this->Url->scheme( ));
 
@@ -54,7 +106,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'ftp://www.example.com',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -68,7 +120,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasUser( ));
 
-		$this->Url->set( 'http://user:password@www.example.com' );
+		$this->Url->setString( 'http://user:password@www.example.com' );
 		$this->assertTrue( $this->Url->hasUser( ));
 		$this->assertEquals( 'user', $this->Url->user( ));
 
@@ -77,7 +129,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://test:password@www.example.com',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -91,7 +143,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasPassword( ));
 
-		$this->Url->set( 'http://user:password@www.example.com' );
+		$this->Url->setString( 'http://user:password@www.example.com' );
 		$this->assertTrue( $this->Url->hasPassword( ));
 		$this->assertEquals( 'password', $this->Url->password( ));
 
@@ -100,7 +152,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://user:test@www.example.com',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -114,7 +166,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasHost( ));
 
-		$this->Url->set( 'http://www.example.com' );
+		$this->Url->setString( 'http://www.example.com' );
 		$this->assertTrue( $this->Url->hasHost( ));
 		$this->assertEquals( 'www.example.com', $this->Url->host( ));
 
@@ -123,7 +175,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.test.com',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -137,7 +189,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasPort( ));
 
-		$this->Url->set( 'http://www.example.com:80' );
+		$this->Url->setString( 'http://www.example.com:80' );
 		$this->assertTrue( $this->Url->hasPort( ));
 		$this->assertEquals( '80', $this->Url->port( ));
 
@@ -146,7 +198,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.example.com:12',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -160,7 +212,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasPath( ));
 
-		$this->Url->set( 'http://www.example.com/path/to/file.php' );
+		$this->Url->setString( 'http://www.example.com/path/to/file.php' );
 		$this->assertTrue( $this->Url->hasPath( ));
 		$this->assertEquals( '/path/to/file.php', $this->Url->path( ));
 
@@ -169,7 +221,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.example.com/path/to/otherfile.php',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -183,7 +235,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasParams( ));
 
-		$this->Url->set( 'http://www.example.com/path/to/file.php?foo=a&bar=b' );
+		$this->Url->setString( 'http://www.example.com/path/to/file.php?foo=a&bar=b' );
 		$this->assertTrue( $this->Url->hasParams( ));
 		$this->assertEquals(
 			array(
@@ -201,7 +253,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.example.com/path/to/file.php?foo%5Bsushi%5D=bar',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -215,7 +267,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasParam( 'foo' ));
 
-		$this->Url->set( 'http://www.example.com/path/to/file.php?foo=a' );
+		$this->Url->setString( 'http://www.example.com/path/to/file.php?foo=a' );
 		$this->assertTrue( $this->Url->hasParam( 'foo' ));
 		$this->assertEquals( 'a', $this->Url->param( 'foo' ));
 
@@ -227,7 +279,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.example.com/path/to/file.php?foo%5Bsushi%5D=bar&bar=b',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 
@@ -241,7 +293,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->Url->hasFragment( ));
 
-		$this->Url->set( 'http://www.example.com/path/to/file.php#fragment' );
+		$this->Url->setString( 'http://www.example.com/path/to/file.php#fragment' );
 		$this->assertTrue( $this->Url->hasFragment( ));
 		$this->assertEquals( 'fragment', $this->Url->fragment( ));
 
@@ -250,7 +302,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(
 			'http://www.example.com/path/to/file.php#otherfragment',
-			$this->Url->get( )
+			$this->Url->string( )
 		);
 	}
 }

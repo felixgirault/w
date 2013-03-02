@@ -21,9 +21,9 @@ class Command {
 	 *	Standard streams.
 	 */
 
-	const stdin = 0;
-	const stdout = 1;
-	const stderr = 2;
+	const STDIN = 0;
+	const STDOUT = 1;
+	const STDERR = 2;
 
 
 
@@ -95,25 +95,25 @@ class Command {
 		$Result->command = $this->_build( $options );
 
 		$streams = array(
-			self::stdin => array( 'pipe', 'r' ),
-			self::stdout => array( 'pipe', 'w' ),
-			self::stderr => array( 'pipe', 'w' )
+			self::STDIN => array( 'pipe', 'r' ),
+			self::STDOUT => array( 'pipe', 'w' ),
+			self::STDERR => array( 'pipe', 'w' )
 		);
 
 		$process = proc_open( $Result->command, $streams, $pipes );
 
 		if ( is_resource( $process )) {
 			if ( !empty( $stdin )) {
-				fwrite( $pipes[ self::stdin ], $stdin );
+				fwrite( $pipes[ self::STDIN ], $stdin );
 			}
 
-			fclose( $pipes[ self::stdin ]);
+			fclose( $pipes[ self::STDIN ]);
 
-			$Result->output = stream_get_contents( $pipes[ self::stdout ]);
-			fclose( $pipes[ self::stdout ]);
+			$Result->output = stream_get_contents( $pipes[ self::STDOUT ]);
+			fclose( $pipes[ self::STDOUT ]);
 
-			$Result->errors = stream_get_contents( $pipes[ self::stderr ]);
-			fclose( $pipes[ self::stderr ]);
+			$Result->errors = stream_get_contents( $pipes[ self::STDERR ]);
+			fclose( $pipes[ self::STDERR ]);
 
 			$Result->status = proc_close( $process );
 		}

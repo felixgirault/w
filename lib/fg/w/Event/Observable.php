@@ -10,7 +10,7 @@ namespace fg\w\Event;
 
 
 /**
- *
+ *	Makes an object observable by observers objects.
  *
  *	@package fg.w.Event
  */
@@ -63,12 +63,36 @@ trait Observable {
 	 *	Sends an event to all attached observers.
 	 *
 	 *	@param Event $Event The event to send.
+	 *	@param data
 	 */
 
-	public function notify( Event $Event ) {
+	public function notify( $event ) {
+
+		$args = func_get_args( );
+		$argCount = count( $args );
 
 		foreach ( $this->_observers as $Observer ) {
-			$Observer->handle( $Event );
+			switch ( $argCount ) {
+				case 1:
+					$Observer->handle( $event );
+					break:
+
+				case 2:
+					$Observer->handle( $event, $args[ 1 ]);
+					break:
+
+				case 3:
+					$Observer->handle( $event, $args[ 1 ], $args[ 2 ]);
+					break:
+
+				case 4:
+					$Observer->handle( $event, $args[ 1 ], $args[ 2 ], $args[ 3 ]);
+					break:
+
+				default:
+					call_user_func_array( array( $Observer, 'handle' ), $args );
+					break;
+			}
 		}
 	}
 }

@@ -23,25 +23,25 @@ class Dispatcher {
 	 *	@var array
 	 */
 
-	protected $_subscribers = array( );
+	protected $_listeners = array( );
 
 
 
 	/**
-	 *	Attaches a callback to be called when an event of the given type is fired.
+	 *	Attaches a callback to be called when an event is fired.
 	 *
-	 *	@param string $eventType The event type.
+	 *	@param string $event The event name.
 	 *	@param callable $callback The callback to attach.
 	 */
 
-	public function attach( $eventType, callable $callback ) {
+	public function attach( $event, callable $callback ) {
 
-		if ( !isset( $this->_subscribers[ $eventType ])) {
-			$this->_subscribers[ $eventType ] = array( );
+		if ( !isset( $this->_listeners[ $event ])) {
+			$this->_listeners[ $event ] = array( );
 		}
 
-		if ( !in_array( $callback, $this->_subscribers[ $eventType ], true )) {
-			$this->_subscribers[ $eventType ][ ] = $callback;
+		if ( !in_array( $callback, $this->_listeners[ $event ], true )) {
+			$this->_listeners[ $event ][ ] = $callback;
 		}
 	}
 
@@ -50,17 +50,17 @@ class Dispatcher {
 	/**
 	 *	Detaches a callback.
 	 *
-	 *	@param string $eventType The event type.
+	 *	@param string $event The event name.
 	 *	@param callable $callback The callback to detach.
 	 */
 
-	public function detach( $eventType, callable $callback ) {
+	public function detach( $event, callable $callback ) {
 
-		if ( isset( $this->_subscribers[ $eventType ])) {
-			$index = array_search( $callback, $this->_subscribers, true );
+		if ( isset( $this->_listeners[ $event ])) {
+			$index = array_search( $callback, $this->_listeners, true );
 
 			if ( $index !== false ) {
-				$this->_subscribers[ $eventType ][ $index ];
+				$this->_listeners[ $event ][ $index ];
 			}
 		}
 	}
@@ -68,19 +68,20 @@ class Dispatcher {
 
 
 	/**
-	 *	Dispatches the given event to appropriate callbacks.
+	 *	Dispatches an event to appropriate listeners.
 	 *
-	 *	@param string $event The event to send.
+	 *	@param string $event The event name.
+	 *	@param mixed $data The event data.
 	 */
 
-	public function dispatch( Event $Event ) {
+	public function dispatch( $event, $data ) {
 
-		$type = $Event->type( );
+		if ( !isset( $this->_listeners[ $event ])) {
+			return;
+		}
 
-		if ( isset( $this->_subscribers[ $type ])) {
-			foreach ( $this->_subscribers[ $type ] as $callback ) {
-				call_user_func( $callback, $Event );
-			}
+		foreach ( $this->_listeners[ $event ] as $callback ) {
+			call_user_func( $callback, $data );
 		}
 	}
 }

@@ -22,58 +22,14 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 */
 
-	public function testConstruct( ) {
-
-		$String = new String( );
-	}
-
-
-
-	/**
-	 *
-	 */
-
-	public function testLength( ) {
-
-		$String = new String( 'test' );
-
-		$this->assertEquals( $String->length( ), strlen( 'test' ));
-	}
-
-
-
-	/**
-	 *
-	 */
-
-	public function testAt( ) {
-
-		$String = new String( 'abcdef' );
-
-		$this->assertEquals( $String->at( 0 ), 'a' );
-		$this->assertEquals( $String->at( 1 ), 'b' );
-
-		$this->assertEquals( $String->at( -1 ), 'f' );
-		$this->assertEquals( $String->at( -2 ), 'e' );
-
-		$this->assertNull( $String->at( 12 ));
-		$this->assertNull( $String->at( -12 ));
-	}
-
-
-
-	/**
-	 *
-	 */
-
 	public function testIndexOf( ) {
 
-		$String = new String( 'test test string' );
+		$string = 'test test string';
 
-		$this->assertEquals( $String->indexOf( 'test' ), 0 );
-		$this->assertEquals( $String->indexOf( 'string' ), 10 );
+		$this->assertEquals( String::indexOf( $string, 'test' ), 0 );
+		$this->assertEquals( String::indexOf( $string, 'string' ), 10 );
 
-		$this->assertFalse( $String->indexOf( 'foo' ));
+		$this->assertFalse( String::indexOf( $string, 'foo' ));
 	}
 
 
@@ -84,12 +40,12 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	public function testLastIndexOf( ) {
 
-		$String = new String( 'test test string' );
+		$string = 'test test string';
 
-		$this->assertEquals( $String->lastIndexOf( 'test' ), 5 );
-		$this->assertEquals( $String->lastIndexOf( 'string' ), 10 );
+		$this->assertEquals( String::lastIndexOf( $string, 'test' ), 5 );
+		$this->assertEquals( String::lastIndexOf( $string, 'string' ), 10 );
 
-		$this->assertFalse( $String->lastIndexOf( 'foo' ));
+		$this->assertFalse( String::lastIndexOf( $string, 'foo' ));
 	}
 
 
@@ -100,10 +56,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	public function testContains( ) {
 
-		$String = new String( 'test string' );
+		$string = 'test string';
 
-		$this->assertTrue( $String->contains( 'test' ));
-		$this->assertFalse( $String->contains( 'foo' ));
+		$this->assertTrue( String::contains( $string, 'test' ));
+		$this->assertFalse( String::contains( $string, 'foo' ));
 	}
 
 
@@ -114,13 +70,13 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStartsWith( ) {
 
-		$String = new String( 'test string' );
+		$string = 'test string';
 
-		$this->assertTrue( $String->startsWith( $String ));
-		$this->assertTrue( $String->startsWith( 'test' ));
+		$this->assertTrue( String::startsWith( $string, $string ));
+		$this->assertTrue( String::startsWith( $string, 'test' ));
 
-		$this->assertFalse( $String->startsWith( 'fail' ));
-		$this->assertFalse( $String->startsWith( 'longer test string' ));
+		$this->assertFalse( String::startsWith( $string, 'fail' ));
+		$this->assertFalse( String::startsWith( $string, 'longer test string' ));
 	}
 
 
@@ -131,28 +87,13 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	public function testEndsWith( ) {
 
-		$String = new String( 'test string' );
+		$string = 'test string';
 
-		$this->assertTrue( $String->endsWith( $String ));
-		$this->assertTrue( $String->endsWith( 'string' ));
+		$this->assertTrue( String::endsWith( $string, $string ));
+		$this->assertTrue( String::endsWith( $string, 'string' ));
 
-		$this->assertFalse( $String->endsWith( 'fail' ));
-		$this->assertFalse( $String->endsWith( 'longer test string' ));
-	}
-
-
-
-	/**
-	 *
-	 */
-
-	public function testArg( ) {
-
-		$String = new String( 'hello %s' );
-		$String->arg( 'world' );
-
-		$this->assertEquals( $String->buffer( ), 'hello world' );
-		$this->assertEquals( $String->length( ), strlen( 'hello world' ));
+		$this->assertFalse( String::endsWith( $string, 'fail' ));
+		$this->assertFalse( String::endsWith( $string, 'longer test string' ));
 	}
 
 
@@ -163,10 +104,10 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSplit( ) {
 
-		$String = new String( 'test,,string' );
+		$string = 'test,,string';
 
-		$this->assertEquals( $String->split( ',' ), array( 'test', 'string' ));
-		$this->assertEquals( $String->split( ',', false ), array( 'test', '', 'string' ));
+		$this->assertEquals( String::split( $string, ',' ), array( 'test', 'string' ));
+		$this->assertEquals( String::split( $string, ',', false ), array( 'test', '', 'string' ));
 	}
 
 
@@ -179,7 +120,6 @@ class StringTest extends \PHPUnit_Framework_TestCase {
 
 		$this->setExpectedException( 'InvalidArgumentException' );
 
-		$String = new String( 'test,,string' );
-		$String->split( '' );
+		String::split( 'test,,string', '' );
 	}
 }

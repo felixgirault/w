@@ -48,7 +48,10 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Constructs a node with the given properties and parent.
 	 *
+	 *	@param array $properties Node properties.
+	 *	@param Node $Parent Parent node.
 	 */
 
 	public function __construct( array $properties = array( ), Node $Parent = null ) {
@@ -60,7 +63,7 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
-	 *	Destroys the node.
+	 *	Destroys the node and all of its children.
 	 */
 
 	public function __destruct( ) {
@@ -73,7 +76,7 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
-	 *
+	 *	Clones the node and all of its children.
 	 */
 
 	public function __clone( ) {
@@ -84,9 +87,11 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns the value of the property with the given name.
 	 *
-	 *
-	 *	@throws OutOfBoundsException
+	 *	@throws OutOfBoundsException if the property doesn't exists.
+	 *	@param string $name Property name.
+	 *	@return mixed Property value.
 	 */
 
 	public function __get( $name ) {
@@ -101,7 +106,10 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Sets the value of a property.
 	 *
+	 *	@param string $name Property name.
+	 *	@param mixed $value Property value.
 	 */
 
 	public function __set( $name, $value ) {
@@ -123,7 +131,10 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns if a property with the given name exists.
 	 *
+	 *	@param string $name Property name.
+	 *	@return boolean Whether the property exists or not.
 	 */
 
 	public function hasProperty( $name ) {
@@ -134,12 +145,16 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns a property.
 	 *
+	 *	@param string $name Property name.
+	 *	@param mixed $default Value to return if the property doesn't exists.
+	 *	@return mixed Property value.
 	 */
 
 	public function property( $name, $default = null ) {
 
-		if ( array_key_exists( $name, $this->_properties )) {
+		if ( $this->hasProperty( $name )) {
 			return $this->_properties[ $name ];
 		}
 
@@ -149,7 +164,9 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Returns all properties.
 	 *
+	 *	@return array Properties.
 	 */
 
 	public function properties( ) {
@@ -206,7 +223,9 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 
 	/**
+	 *	Sets the node parent.
 	 *
+	 *	@param Node $Parent New parent.
 	 */
 
 	public function setParent( Node $Parent = null ) {
@@ -216,13 +235,13 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 		}
 
 		if ( $this->hasParent( )) {
-			$this->_Parent->_remove( $this );
+			$this->_Parent->removeChild( $this );
 		}
 
 		$this->_Parent = $Parent;
 
 		if ( $this->hasParent( )) {
-			$this->_Parent->_add( $this );
+			$this->_Parent->addChild( $this );
 		}
 	}
 
@@ -323,21 +342,8 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 		if ( !in_array( $Child, $this->_children )) {
 			$Child->_Parent = $this;
-			$this->_add( $Child );
+			$this->_children[ ] = $Child;
 		}
-	}
-
-
-
-	/**
-	 *	Adds the given node to the node's children.
-	 *
-	 *	@param Node Child node to add.
-	 */
-
-	protected function _add( Node $Child ) {
-
-		$this->_children[ ] = $Child;
 	}
 
 
@@ -350,22 +356,11 @@ class Node extends \fg\w\Pattern\Visitable implements \IteratorAggregate {
 
 	public function removeChild( Node $Child ) {
 
-		if ( $Child->_Parent === $this ) {
-			$Child->_Parent = null;
-			$this->_remove( $Child );
+		if ( $Child->_Parent !== $this ) {
+			return;
 		}
-	}
 
-
-
-	/**
-	 *	Removes the given node from the node's children.
-	 *
-	 *	@param Node Child node to remove.
-	 */
-
-	protected function _remove( Node $Child ) {
-
+		$Child->_Parent = null;
 		$index = array_search( $Child, $this->_children );
 
 		if ( $index !== false ) {

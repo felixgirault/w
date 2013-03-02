@@ -5,14 +5,14 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Network;
+namespace fg\w\Http;
 
 
 
 /**
  *	An utility class to manipulate URLs.
  *
- *	@package fg.w.Network
+ *	@package fg.w.Http
  */
 
 class Url {
@@ -33,7 +33,7 @@ class Url {
 
 
 	/**
-	 *	Defaults values of URL components.
+	 *	Default values of URL components.
 	 *
 	 *	@var array
 	 */
@@ -44,7 +44,7 @@ class Url {
 		self::password => '',
 		self::host => '',
 		self::port => '',
-		self::path => '',
+		self::path => '/',
 		self::params => array( ),
 		self::fragment => ''
 	);
@@ -74,12 +74,18 @@ class Url {
 	/**
 	 *	Constructor.
 	 *
-	 *	@param string $url An URL as a string.
+	 *	@see setString( )
+	 *	@see setComponents( )
+	 *	@param string|array $url An URL string, or an array of URL components.
 	 */
 
 	public function __construct( $url = '' ) {
 
-		$this->set( $url );
+		if ( is_string( $url )) {
+			$this->setString( $url );
+		} else if ( is_array( $url )) {
+			$this->setComponents( $url );
+		}
 	}
 
 
@@ -109,58 +115,12 @@ class Url {
 
 
 	/**
-	 *	Sets a new URL.
-	 *
-	 *	@param string $url The new URL.
-	 */
-
-	public function set( $url = '' ) {
-
-		$this->_components = empty( $url )
-			? $this->_defaults
-			: array_merge(
-				$this->_defaults,
-				$this->_parse( $url )
-			);
-
-		$this->_string = $url;
-	}
-
-
-
-	/**
-	 *	Parses the given URL.
-	 *
-	 *	@param string $url The URL to parse.
-	 */
-
-	protected function _parse( $url ) {
-
-		$components = @parse_url( $url );
-
-		if ( $components === false ) {
-			throw new Exception( 'Unable to parse url.' );
-		}
-
-		if ( isset( $components[ self::params ])) {
-			parse_str(
-				$components[ self::params ],
-				$components[ self::params ]
-			);
-		}
-
-		return $components;
-	}
-
-
-
-	/**
 	 *	Returns the URL as a string.
 	 *
 	 *	@return string The URL.
 	 */
 
-	public function get( ) {
+	public function string( ) {
 
 		if ( empty( $this->_string )) {
 			$this->_build( );
@@ -209,6 +169,86 @@ class Url {
 	protected function _pair( $one, $two, $glue = ':' ) {
 
 		return trim( implode( $glue, array( $one, $two )), $glue );
+	}
+
+
+
+	/**
+	 *	Sets a new URL.
+	 *
+	 *	@param string $url The new URL.
+	 */
+
+	public function setString( $url = '' ) {
+
+		$this->_components = empty( $url )
+			? $this->_defaults
+			: array_merge(
+				$this->_defaults,
+				$this->_parse( $url )
+			);
+
+		$this->_string = $url;
+	}
+
+
+
+	/**
+	 *	Parses the given URL.
+	 *
+	 *	@param string $url The URL to parse.
+	 */
+
+	protected function _parse( $url ) {
+
+		$components = parse_url( $url );
+
+		if ( $components === false ) {
+			throw new Exception( 'Unable to parse url.' );
+		}
+
+		if ( isset( $components[ self::params ])) {
+			parse_str(
+				$components[ self::params ],
+				$components[ self::params ]
+			);
+		}
+
+		return $components;
+	}
+
+
+
+	/**
+	 *	Returns the URL components.
+	 *
+	 *	@return array URL components.
+	 */
+
+	public function components( ) {
+
+		return $this->_components;
+	}
+
+
+
+	/**
+	 *	Sets the URL components.
+	 *
+	 *	@param array $components URL components.
+	 */
+
+	public function setComponents( $components ) {
+
+		$this->_components = array_merge(
+			$this->_defaults,
+			array_intersect_key(
+				$components,
+				$this->_defaults
+			)
+		);
+
+		$this->_clear( );
 	}
 
 
@@ -454,46 +494,6 @@ class Url {
 
 
 	/**
-	 *	Returns if the URL has any parameter.
-	 *
-	 *	@return boolean Whether the URL has any parameter.
-	 */
-
-	public function hasParams( ) {
-
-		return !empty( $this->_components[ self::params ]);
-	}
-
-
-
-	/**
-	 *	Returns the URL parameters.
-	 *
-	 *	@return array Parameters.
-	 */
-
-	public function params( ) {
-
-		return $this->_components[ self::params ];
-	}
-
-
-
-	/**
-	 *	Sets the URL parameters.
-	 *
-	 *	@param array $params Parameters.
-	 */
-
-	public function setParams( array $params ) {
-
-		$this->_components[ self::params ] = $params;
-		$this->_clear( );
-	}
-
-
-
-	/**
 	 *	Returns if the URL has the given parameter.
 	 *
 	 *	@param string $name Parameter name.
@@ -503,6 +503,19 @@ class Url {
 	public function hasParam( $name ) {
 
 		return !empty( $this->_components[ self::params ][ $name ]);
+	}
+
+
+
+	/**
+	 *	Returns if the URL has any parameter.
+	 *
+	 *	@return boolean Whether the URL has any parameter.
+	 */
+
+	public function hasParams( ) {
+
+		return !empty( $this->_components[ self::params ]);
 	}
 
 
@@ -524,6 +537,19 @@ class Url {
 
 
 	/**
+	 *	Returns the URL parameters.
+	 *
+	 *	@return array Parameters.
+	 */
+
+	public function params( ) {
+
+		return $this->_components[ self::params ];
+	}
+
+
+
+	/**
 	 *	Sets a particular URL parameter.
 	 *
 	 *	@param string $name Parameter name.
@@ -533,6 +559,20 @@ class Url {
 	public function setParam( $name, $value ) {
 
 		$this->_components[ self::params ][ $name ] = $value;
+		$this->_clear( );
+	}
+
+
+
+	/**
+	 *	Sets the URL parameters.
+	 *
+	 *	@param array $params Parameters.
+	 */
+
+	public function setParams( array $params ) {
+
+		$this->_components[ self::params ] = $params;
 		$this->_clear( );
 	}
 

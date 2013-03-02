@@ -18,9 +18,12 @@ namespace fg\w\Event;
 trait Observer {
 
 	/**
+	 *	Handles an event.
 	 *
+	 *	@param string $event The event name.
+	 *	@param data
 	 */
 
-	abstract public function handle( Event $Event );
+	abstract public function handle( $event );
 
 }

@@ -5,40 +5,17 @@
  *	@license FreeBSD License (http://opensource.org/licenses/BSD-2-Clause)
  */
 
-namespace fg\w\Storage\Engine;
+namespace fg\w\Storage\Engine\Array;
 
 
 
 /**
  *	Stores a collection of string indexed values.
  *
- *	@package fg.w.Storage.Engine
+ *	@package fg.w.Storage.Engine.Array
  */
 
-abstract class Array implements \fg\w\Storage\Engine {
-
-	/**
-	 *	Internal data.
-	 *
-	 *	@param array
-	 */
-
-	protected $_data = array( );
-
-
-
-	/**
-	 *	Populates the store with the given data.
-	 *
-	 *	@param array $data Initial data.
-	 */
-
-	public function __construct( array &$data = array( )) {
-
-		$this->_data =& $data;
-	}
-
-
+class Array implements \fg\w\Storage\Engine\Array {
 
 	/**
 	 *	Returns if a value exists for the given key.
@@ -47,7 +24,10 @@ abstract class Array implements \fg\w\Storage\Engine {
 	 *	@return boolean Whether a value exists or not.
 	 */
 
-	abstract public function has( $key );
+	public function has( $key ) {
+
+		return array_key_exists( $key, $this->_data );
+	}
 
 
 
@@ -58,19 +38,9 @@ abstract class Array implements \fg\w\Storage\Engine {
 	 *	@param mixed $value The value to set.
 	 */
 
-	abstract public function write( $key, $value );
+	public function write( $key, $value ) {
 
-
-
-	/**
-	 *	Sets all the internal data.
-	 *
-	 *	@param array $data The data to set.
-	 */
-
-	public function writeAll( array $data ) {
-
-		$this->_data = $data;
+		$this->_data[ $key ] = $value;
 	}
 
 
@@ -84,19 +54,11 @@ abstract class Array implements \fg\w\Storage\Engine {
 	 *	@return mixed The value of the given key, or the default value.
 	 */
 
-	abstract public function read( $key, $default = null );
+	public function read( $key, $default = null ) {
 
-
-
-	/**
-	 *	Returns all the internal data.
-	 *
-	 *	@return array Data.
-	 */
-
-	public function readAll( ) {
-
-		return $this->_data;
+		return $this->has( $key )
+			? $this->_data[ $key ]
+			: $default;
 	}
 
 
@@ -107,16 +69,10 @@ abstract class Array implements \fg\w\Storage\Engine {
 	 *	@param $key A key or a path identifying the value.
 	 */
 
-	abstract public function delete( $key );
+	public function delete( $key ) {
 
-
-
-	/**
-	 *
-	 */
-
-	public function clear( ) {
-
-		$this->_data = array( );
+		if ( $this->has( $key )) {
+			unset( $this->_data[ $key ]);
+		}
 	}
 }
